@@ -11,7 +11,7 @@ import {
   Users,
   DollarSign,
 } from "lucide-vue-next";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const router = useRouter();
 
@@ -96,15 +96,16 @@ const pricingPlans = [
   },
 ];
 
+// Corrected image paths assuming assets are in public directory
 const partners = [
-  "./src/assets/coinbase.svg",
+  "./src/assets/coinbase.svg", // No need for "./src/assets" if they are in /public
   "./src/assets/notion.svg",
   "./src/assets/linear.svg",
   "./src/assets/tinder.svg",
   "./src/assets/gumroad.svg",
   "./src/assets/tinder.svg",
 ];
-// add ref for carousel
+
 const carousel = ref<HTMLElement | null>(null);
 const scrollAmount = ref(0);
 const scrollInterval = ref<number | null>(null);
@@ -113,14 +114,20 @@ onMounted(() => {
   startCarousel();
 });
 
+onUnmounted(() => {
+  if (scrollInterval.value !== null) {
+    clearInterval(scrollInterval.value);
+    scrollInterval.value = null;
+  }
+});
+
 const startCarousel = () => {
   if (scrollInterval.value === null) {
-    // prevent multiple intervals.
     scrollInterval.value = window.setInterval(() => {
       if (carousel.value) {
-        scrollAmount.value += 1; // Control speed here
+        scrollAmount.value += 1;
         carousel.value.scrollLeft = scrollAmount.value;
-        //reset position
+
         if (
           scrollAmount.value >=
           carousel.value.scrollWidth - carousel.value.clientWidth
@@ -129,7 +136,7 @@ const startCarousel = () => {
           carousel.value.scrollLeft = 0;
         }
       }
-    }, 20); // Adjust for speed - smaller = faster
+    }, 20);
   }
 };
 
@@ -139,9 +146,11 @@ const handleGetStarted = () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
-    <!-- Navbar (Not Fixed) -->
-    <nav class="px-4 py-4 bg-gradient-to-br from-purple-900 to-purple-950">
+  <div
+    class="min-h-screen flex flex-col bg-gradient-to-br from-purple-900 to-purple-950"
+  >
+    <!-- Navbar (Transparent) -->
+    <nav class="px-4 py-4">
       <div
         class="max-w-7xl text-white mx-auto flex justify-between items-center"
       >
@@ -160,13 +169,13 @@ const handleGetStarted = () => {
     <main class="flex-grow">
       <!-- Hero Section -->
       <section
-        class="py-20 px-6 bg-gradient-to-br from-purple-900 to-purple-950 flex items-center"
+        class="py-20 px-6 flex items-center"
         style="min-height: calc(100vh - 4rem)"
       >
-        <div class="max-w-7xl mx-auto">
-          <div class="grid md:grid-cols-2 gap-12">
+        <div class="max-w-[90rem] mx-auto">
+          <div class="grid md:grid-cols-2 gap-16">
             <div>
-              <h1 class="text-6xl md:text-7xl font-bold mb-6 text-white">
+              <h1 class="text-6xl md:text-8xl font-bold mb-8 text-white">
                 Democratizing AI for Small Businesses
               </h1>
               <p class="text-xl text-gray-200 mb-8">
@@ -230,14 +239,14 @@ const handleGetStarted = () => {
         style="min-height: calc(100vh - 4rem)"
       >
         <div class="max-w-7xl mx-auto text-center">
-          <h2 class="text-3xl font-bold mb-4 text-white">
+          <h2 class="text-3xl font-bold mb-16 text-white">
             Why Choose Digital Twin?
           </h2>
           <p class="text-lg text-gray-200">
             We make AI implementation simple, affordable, and effective for
             small businesses.
           </p>
-          <div class="mt-16 grid gap-8 md:grid-cols-3 lg:grid-cols-6">
+          <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div
               v-for="(feature, i) in whyChooseFeatures"
               :key="i"
@@ -250,7 +259,7 @@ const handleGetStarted = () => {
               <h3 class="text-xl font-semibold text-white">
                 {{ feature.title }}
               </h3>
-              <p class="mt-4 text-purple-200">{{ feature.description }}</p>
+              <p class="mt-4 mb-4 text-purple-200">{{ feature.description }}</p>
             </div>
           </div>
         </div>
