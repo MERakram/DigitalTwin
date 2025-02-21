@@ -1,40 +1,56 @@
-import { defineStore } from 'pinia'
+// src/stores/main.ts
+import { defineStore } from "pinia";
+// Import the JSON files directly
+import article1 from "../assets/articles/article1.json";
+import article2 from "../assets/articles/article2.json";
+import article3 from "../assets/articles/article3.json";
+import article4 from "../assets/articles/article4.json";
+import article5 from "../assets/articles/article5.json";
+import article6 from "../assets/articles/article6.json";
+import article7 from "../assets/articles/article7.json";
+import article8 from "../assets/articles/article8.json";
+import article9 from "../assets/articles/article9.json";
+import article10 from "../assets/articles/article10.json";
+import article11 from "../assets/articles/article11.json";
 
-export const useMainStore = defineStore('main', {
+export const useMainStore = defineStore("main", {
   state: () => ({
     articles: [
-      {
-        id: 1,
-        title: 'Advanced NLP for Small Businesses',
-        price: 499,
-        author: 'Dr. Sarah Chen',
-        preview: 'A comprehensive NLP solution tailored for small business customer service automation. Includes sentiment analysis, intent recognition, and automated response generation.',
-        category: 'Natural Language Processing'
-      },
-      {
-        id: 2,
-        title: 'Computer Vision for Retail Analytics',
-        price: 799,
-        author: 'Prof. James Wilson',
-        preview: 'Implement smart retail analytics with our pre-trained computer vision models. Track customer behavior, optimize store layouts, and enhance security.',
-        category: 'Computer Vision'
-      },
-      {
-        id: 3,
-        title: 'Predictive Analytics Suite',
-        price: 599,
-        author: 'Dr. Emily Rodriguez',
-        preview: 'Leverage machine learning to forecast sales, optimize inventory, and identify business opportunities with our easy-to-use analytics dashboard.',
-        category: 'Machine Learning'
-      },
-      {
-        id: 4,
-        title: 'Smart Document Processing',
-        price: 399,
-        author: 'Prof. Michael Chang',
-        preview: 'Automate document processing with AI. Extract data from invoices, receipts, and forms with high accuracy. Includes OCR and data validation.',
-        category: 'Data Analytics'
+      article1,
+      article2,
+      article3,
+      article4,
+      article5,
+      article6,
+      article7,
+      article8,
+      article9,
+      article10,
+      article11,
+    ] as any[], // Type assertion for simplicity
+  }),
+  actions: {
+    upvoteArticle(articleId: number) {
+      const article = this.articles.find((a) => a.id === articleId);
+      if (article) {
+        article.upvotes = (article.upvotes || 0) + 1; // Ensure upvotes exists
       }
-    ]
-  })
-})
+    },
+    downvoteArticle(articleId: number) {
+      const article = this.articles.find((a) => a.id === articleId);
+      if (article) {
+        article.downvotes = (article.downvotes || 0) + 1;
+      }
+    },
+    likeArticle(articleId: number) {
+      const article = this.articles.find((a) => a.id === articleId);
+      if (article) {
+        article.likes = (article.likes || 0) + 1;
+      }
+    },
+    toggleBookmark(articleId: number) {
+      //TODO: implement later
+      console.log("bookmark toggled", articleId);
+    },
+  },
+});

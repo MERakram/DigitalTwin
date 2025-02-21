@@ -1,0 +1,18 @@
+{
+    "id": 1,
+    "title": "Beyond Node Classification: Graph-Level Tasks with GNNs",
+    "author": "Dr. Anya Sharma",
+    "authorAvatar": "/default-avatar.png",
+    "releaseDate": "2024-10-27",
+    "category": "Graph Neural Networks",
+    "preview": "While many GNN applications focus on node-level predictions, graph-level tasks are becoming increasingly important. These tasks involve predicting properties of entire graphs...",
+    "content": "While many GNN applications focus on node-level predictions (e.g., classifying nodes in a social network), graph-level tasks are becoming increasingly important.  These tasks involve predicting properties of entire graphs, such as classifying the toxicity of a molecule or predicting the function of a protein.\n\n**Key Concepts:**\n\n*   **Readout/Pooling:** A critical component of graph-level GNNs is the readout (or pooling) operation.  This function aggregates node-level features into a single graph-level representation.  Simple readouts include sum, mean, and max pooling. More sophisticated approaches involve trainable pooling layers.\n\n*   **Global vs. Hierarchical Pooling:** Global pooling aggregates information from all nodes at once.  Hierarchical pooling performs aggregation in multiple stages, capturing graph structure at different granularities.\n\n*   **Graph Isomorphism:**  A challenge is that GNNs should be invariant to graph isomorphism (i.e., two graphs with the same structure but different node orderings should produce the same output).\n\n**Mathematical Formulations:**\n\n*   **Simple Readout (Mean Pooling):**\n\n    ```latex\n    h_G = \\text{MEAN}_{i \\in V} h_i\n    ```\n    where \\( h_G \\) is the graph-level representation, \\( V \\) is the set of nodes, and \\( h_i \\) is the node-level feature vector.\n\n*   **Trainable Readout (with a linear layer):**\n\n    ```latex\n    h_G = W \\cdot \\text{CONCAT}(\\text{MEAN}_{i \\in V} h_i, \\text{MAX}_{i \\in V} h_i)\n    ```\n    where \\( W \\) is a trainable weight matrix.\n\n**Diagram Description:** A diagram showing a GNN processing a graph.  Node features are updated through multiple layers.  Finally, a readout function aggregates node features into a single graph-level vector, which is fed into a classifier (e.g., a softmax layer).\n\n**Applications:**\n\n*   **Molecule Classification:** Predicting properties like toxicity, solubility, or drug efficacy.\n*   **Protein Function Prediction:** Determining the biological role of a protein.\n*   **Program Analysis:**  Identifying bugs or vulnerabilities in code represented as a graph.\n*   **Social Network Analysis:** Classifying entire social networks (e.g., identifying communities).\n\n**Advantages:**\n\n*   Can capture complex graph-level properties.\n*   End-to-end trainable.\n\n**Disadvantages:**\n\n*   Choice of readout function is crucial and can be challenging.\n*   Scalability to very large graphs can be an issue.\n\n**Citations (Fictional):**\n\n1.  Zhang, Y., et al. \"Graph Pooling for Graph Classification.\" *Journal of Artificial Intelligence Research*, 2025.\n2.  Lee, J., and Kim, H. \"Hierarchical Graph Representations for Molecular Property Prediction.\" *International Conference on Machine Learning (ICML)*, 2024.",
+    "price": 599,
+    "originalPrice": 799,
+    "isOnSale": true,
+    "upvotes": 15,
+    "downvotes": 2,
+    "likes": 35,
+    "comments": 7,
+    "imageUrl": "./src/assets/images/advanced.png"
+}

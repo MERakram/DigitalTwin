@@ -1,0 +1,18 @@
+{
+    "id": 7,
+    "title": "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges",
+    "author": "Dr. Michael Bronstein",
+    "authorAvatar": "/default-avatar.png",
+    "releaseDate": "2024-11-12",
+    "category": "Graph Neural Networks",
+    "preview": "An overview of Geometric Deep Learning, unifying approaches that generalize deep learning to non-Euclidean domains like graphs and manifolds.",
+    "content": "Geometric Deep Learning (GDL) is an umbrella term for emerging techniques attempting to generalize deep learning models to non-Euclidean domains such as graphs and manifolds.  It provides a unified framework for understanding various deep learning architectures, including CNNs, GNNs, and recurrent models, from a geometric perspective.\n\n**Key Concepts:**\n\n*   **Non-Euclidean Domains:** Data that does not reside in a standard Euclidean space (e.g., a grid).  Examples include graphs, manifolds (e.g., surfaces), and groups.\n*   **Symmetries and Invariances:**  GDL emphasizes the importance of symmetries and invariances in data.  For example, CNNs are translation-invariant, while GNNs are permutation-invariant (to node ordering).\n*   **Group Theory:**  Group theory provides a powerful mathematical framework for describing symmetries.\n*   **Differential Geometry:**  Differential geometry provides tools for analyzing manifolds and defining operations like derivatives and convolutions on curved spaces.\n*   **Gauge Theory:**  A framework from physics that deals with local symmetries and can be used to design GNNs that are equivariant to certain transformations.\n\n**Mathematical Formulation (Example: Gauge Equivariant GNN):**\n\nThis is a very simplified example.  Gauge equivariant GNNs involve complex concepts from differential geometry and gauge theory.\n\nConsider a feature \\(x_i\\) on node \\(i\\) and a connection (edge) between nodes \\(i\\) and \\(j\\). A gauge transformation changes the local coordinate system at each node.  A gauge equivariant GNN ensures that the output transforms appropriately under these transformations.\n\n**Diagram Description:**  A diagram illustrating different non-Euclidean domains: a grid (for images), a graph, and a manifold (e.g., a sphere).\n\n**Applications:**\n\n*   **Computer Vision:**  Generalizing CNNs to non-Euclidean data like 3D point clouds and meshes.\n*   **Computer Graphics:**  Shape analysis, mesh processing, and animation.\n*   **Drug Discovery:**  Modeling molecules as graphs.\n*   **Recommender Systems:**  Modeling user-item interactions as graphs.\n*   **Physics:** Modeling physical systems with symmetries (e.g., particle physics).\n\n**Advantages:**\n\n*   **Unified Framework:** Provides a common language for understanding different deep learning architectures.\n*   **Generalization:**  Extends deep learning to non-Euclidean domains.\n*   **Exploits Symmetries:**  Leads to more efficient and robust models.\n\n**Disadvantages:**\n\n*   **Mathematical Complexity:**  Requires understanding of advanced mathematical concepts.\n*   **Computational Challenges:**  Developing efficient implementations can be difficult.\n\n**Citations (Fictional):**\n\n1.  Bronstein, M. M., Bruna, J., Cohen, T., & Veličković, P. (2021). \"Geometric deep learning: Grids, groups, graphs, geodesics, and gauges.\" *ArXiv Preprint ArXiv:2104.13478*.\n2.  Cohen, T., & Welling, M. (2016). \"Group equivariant convolutional networks.\" *International Conference on Machine Learning*. PMLR.\n",
+    "price": 999,
+    "originalPrice": null,
+    "isOnSale": false,
+    "upvotes": 210,
+    "downvotes": 8,
+    "likes": 450,
+    "comments": 65,
+    "imageUrl": "./src/assets/images/advanced.png"
+}

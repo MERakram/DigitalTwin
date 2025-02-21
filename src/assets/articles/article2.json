@@ -1,0 +1,18 @@
+{
+    "id": 2,
+    "title": "Explainable AI for Graph Neural Networks: Unveiling the Black Box",
+    "author": "Prof. Ben Miller",
+    "authorAvatar": "/default-avatar.png",
+    "releaseDate": "2024-10-28",
+    "category": "Graph Neural Networks",
+    "preview": "Graph Neural Networks (GNNs) have achieved impressive results, but their decision-making processes are often opaque. Explainable AI (XAI) is crucial for understanding...",
+    "content": "**Introduction:** Graph Neural Networks (GNNs) have achieved impressive results in various domains, but their decision-making processes are often opaque. Explainable AI (XAI) techniques are crucial for understanding *why* a GNN makes a particular prediction, building trust, and identifying potential biases.\n\n**Key Concepts:**\n\n* **Saliency Maps:** Highlight the nodes and edges that are most important for a specific prediction. Analogous to saliency maps in image classification.\n* **Counterfactual Explanations:** Identify minimal changes to the input graph that would alter the GNN's prediction. For example, \"What edges would need to be added/removed to change the classification of this molecule?\"\n* **Rule Extraction:** Derive human-understandable rules from the trained GNN, approximating its behavior.\n* **Attention-Based Explanations:** If the GNN uses attention mechanisms (like GAT), the attention weights can provide insights into which nodes are most influential.\n\n**Mathematical Formulations:**\n\n* **Gradient-Based Saliency:** (Simplified)\n\n  ```latex\n  S_i = \\left\\| \\frac{\\partial y}{\\partial h_i} \\right\\|\n  ```\n\n  where \\(S_i\\) is the saliency of node \\(i\\), \\(y\\) is the GNN's output, and \\(h_i\\) is the node's feature vector.\n* **Counterfactual optimization**:\n    ```latex\n    \\min_{\\delta \\in \\Delta} \\|\\delta\\| + \\lambda \\cdot \\text{loss}(f(x + \\delta), y_{\\text{target}})\n    ```\n    Find the smallest change that can convert the output.",
+    "price": 699,
+    "originalPrice": null,
+    "isOnSale": false,
+    "upvotes": 22,
+    "downvotes": 1,
+    "likes": 48,
+    "comments": 12,
+    "imageUrl": "./src/assets/images/deploy-flask-tensorflow.png"
+}
