@@ -9,13 +9,13 @@ import {
   Heart,
   Bookmark,
   Search,
-  MessageCircle, // For comments
-  MoreHorizontal, // "..." icon
+  MessageCircle,
+  MoreHorizontal,
 } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 
 const store = useMainStore();
-const router = useRouter(); // Get router instance
+const router = useRouter();
 
 const categories = [
   "All",
@@ -34,6 +34,7 @@ const handleCategoryClick = (category: string) => {
   selectedCategory.value = category;
 };
 
+// Computed property for filtered articles
 const filteredArticles = computed(() => {
   let articles = store.articles;
 
@@ -56,30 +57,27 @@ const filteredArticles = computed(() => {
   return articles;
 });
 
-// Placeholder functions (replace with actual Pinia actions)
 const toggleBookmark = (articleId: number) => {
   store.toggleBookmark(articleId);
 };
-const upvote = (articleId: number) => {
-  store.upvoteArticle(articleId);
-};
-const downvote = (articleId: number) => {
-  store.downvoteArticle(articleId);
-};
-const like = (articleId: number) => {
-  store.likeArticle(articleId);
+
+const goToArticleDetails = (articleId: number) => {
+  router.push({ name: "article-details", params: { id: articleId } });
 };
 
-// Function to navigate to article details page.  IMPORTANT!
-const goToArticleDetails = (articleId: number) => {
-  router.push({ name: "article-details", params: { id: articleId } }); // Use named route
+const getAvatarUrl = (author: string) => {
+  const seed = author.replace(/\s+/g, "");
+  return `https://api.dicebear.com/7.x/micah/svg?seed=${seed}&size=64`;
 };
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50">
     <nav class="px-6 py-4 bg-white border-b">
-      <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div
+        class="mx-auto flex justify-between items-center"
+        style="max-width: 90rem"
+      >
         <Logo />
         <div class="flex gap-4">
           <router-link to="/upload" class="btn-secondary"
@@ -90,13 +88,13 @@ const goToArticleDetails = (articleId: number) => {
     </nav>
 
     <div class="border-b bg-white">
-      <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="mx-auto px-6 py-4" style="max-width: 90rem">
         <div class="flex gap-6 overflow-x-auto pb-2">
           <button
             v-for="category in categories"
             :key="category"
             @click="handleCategoryClick(category)"
-            class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-purple-50 hover:text-purple-900 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-purple-50 hover:text-purple-900 transition-colors focus:outline-none flex-shrink-0"
             :class="{
               'bg-purple-100 text-purple-900': category === selectedCategory,
             }"
@@ -124,7 +122,7 @@ const goToArticleDetails = (articleId: number) => {
       </div>
     </div>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
+    <main class="mx-auto px-6 py-12" style="max-width: 90rem">
       <div class="flex gap-8">
         <div class="flex-1">
           <h1 class="text-3xl font-bold mb-8">Latest AI Solutions</h1>
@@ -134,18 +132,18 @@ const goToArticleDetails = (articleId: number) => {
             <div
               v-for="article in filteredArticles"
               :key="article.id"
-              class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
+              class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
               @click="goToArticleDetails(article.id)"
             >
               <div class="flex flex-col md:flex-row">
                 <!-- Left side (content) -->
                 <div class="p-4 md:w-2/3">
                   <div class="flex items-center text-xs text-gray-500 mb-2">
-                    <!-- Assuming you have user avatars. Replace with your actual path -->
+                    <!-- Use the getAvatarUrl function -->
                     <img
-                      :src="article.authorAvatar || '/default-avatar.png'"
-                      alt="Author Avatar"
-                      class="w-6 h-6 rounded-full mr-2"
+                      :src="getAvatarUrl(article.author)"
+                      :alt="article.author"
+                      class="w-8 h-8 rounded-full mr-2"
                     />
                     <span>{{ article.author }}</span>
                   </div>
@@ -177,13 +175,6 @@ const goToArticleDetails = (articleId: number) => {
                       {{ article.upvotes }}
                     </span>
                     <span
-                      v-if="article.likes !== undefined"
-                      class="ml-4 flex items-center"
-                    >
-                      <Heart class="h-4 w-4 mr-1" />
-                      {{ article.likes }}
-                    </span>
-                    <span
                       v-if="article.comments !== undefined"
                       class="ml-4 flex items-center"
                     >
@@ -208,28 +199,17 @@ const goToArticleDetails = (articleId: number) => {
                     ${{ article.price }}
                   </div>
                 </div>
+
                 <!-- Right side (Image) -->
                 <div class="md:w-1/3 flex-shrink-0">
-                  <img
-                    :src="
-                      article.imageUrl || './src/assets/images/advanced.png'
-                    "
-                    :alt="article.title"
-                    class="w-full h-48 object-cover rounded-tr-xl rounded-br-xl md:rounded-bl-none md:rounded-r-xl"
-                  />
+                  <div class="aspect-video">
+                    <img
+                      :src="article.imageUrl"
+                      :alt="article.title"
+                      class="w-full h-full object-cover rounded-tr-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg"
+                    />
+                  </div>
                 </div>
-              </div>
-              <!-- Action Buttons (Bottom Right) -->
-              <div class="absolute bottom-2 right-2 flex space-x-2">
-                <button
-                  @click.stop="toggleBookmark(article.id)"
-                  class="p-1 rounded-full hover:bg-gray-100"
-                >
-                  <Bookmark class="h-4 w-4 text-gray-600" />
-                </button>
-                <button @click.stop class="p-1 rounded-full hover:bg-gray-100">
-                  <MoreHorizontal class="h-4 w-4 text-gray-600" />
-                </button>
               </div>
             </div>
           </div>

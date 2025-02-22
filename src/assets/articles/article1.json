@@ -12,7 +12,6 @@
     "isOnSale": true,
     "upvotes": 15,
     "downvotes": 2,
-    "likes": 35,
     "comments": 7,
-    "imageUrl": "./src/assets/images/advanced.png"
+    "imageUrl": "./src/assets/images/unit-test-deep-learning.png"
 }

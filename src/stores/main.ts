@@ -42,12 +42,6 @@ export const useMainStore = defineStore("main", {
         article.downvotes = (article.downvotes || 0) + 1;
       }
     },
-    likeArticle(articleId: number) {
-      const article = this.articles.find((a) => a.id === articleId);
-      if (article) {
-        article.likes = (article.likes || 0) + 1;
-      }
-    },
     toggleBookmark(articleId: number) {
       //TODO: implement later
       console.log("bookmark toggled", articleId);

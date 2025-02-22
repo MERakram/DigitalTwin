@@ -12,7 +12,6 @@
     "isOnSale": false,
     "upvotes": 22,
     "downvotes": 1,
-    "likes": 48,
     "comments": 12,
     "imageUrl": "./src/assets/images/deploy-flask-tensorflow.png"
 }
