@@ -1,4 +1,3 @@
-// src/views/LandingPage.vue
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import Logo from "../components/Logo.vue";

@@ -1,4 +1,3 @@
-// src/views/HomePage.vue
 <script setup lang="ts">
 import { useMainStore } from "../stores/main";
 import Logo from "../components/Logo.vue";

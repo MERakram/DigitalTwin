@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import Logo from '../components/Logo.vue'
+import { ref } from "vue";
+import Logo from "../components/Logo.vue";
 
-const title = ref('')
-const category = ref('')
-const price = ref('')
-const description = ref('')
-const content = ref('')
+const title = ref("");
+const category = ref("");
+const price = ref("");
+const description = ref("");
+const content = ref("");
 
 const categories = [
-  'Natural Language Processing',
-  'Computer Vision',
-  'Machine Learning',
-  'Data Analytics',
-  'Robotics',
-  'Cloud AI'
-]
+  "Natural Language Processing",
+  "Computer Vision",
+  "Machine Learning",
+  "Data Analytics",
+  "Robotics",
+  "Cloud AI",
+];
 
 const handleSubmit = () => {
   // Handle form submission
@@ -24,9 +24,9 @@ const handleSubmit = () => {
     category: category.value,
     price: price.value,
     description: description.value,
-    content: content.value
-  })
-}
+    content: content.value,
+  });
+};
 </script>
 
 <template>
@@ -44,10 +44,14 @@ const handleSubmit = () => {
     <main class="max-w-3xl mx-auto px-6 py-12">
       <div class="bg-white rounded-xl shadow-sm p-8">
         <h1 class="text-2xl font-bold mb-8">Share Your AI Solution</h1>
-        
+
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <div>
-            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+            <label
+              for="title"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Title</label
+            >
             <input
               type="text"
               id="title"
@@ -58,19 +62,29 @@ const handleSubmit = () => {
           </div>
 
           <div>
-            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+            <label
+              for="category"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Category</label
+            >
             <select
               id="category"
               v-model="category"
               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
             >
               <option value="">Select a category</option>
-              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+              <option v-for="cat in categories" :key="cat" :value="cat">
+                {{ cat }}
+              </option>
             </select>
           </div>
 
           <div>
-            <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price (USD)</label>
+            <label
+              for="price"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Price (USD)</label
+            >
             <input
               type="number"
               id="price"
@@ -81,7 +95,11 @@ const handleSubmit = () => {
           </div>
 
           <div>
-            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Short Description</label>
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Short Description</label
+            >
             <textarea
               id="description"
               v-model="description"
@@ -92,7 +110,11 @@ const handleSubmit = () => {
           </div>
 
           <div>
-            <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+            <label
+              for="content"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Content</label
+            >
             <textarea
               id="content"
               v-model="content"
