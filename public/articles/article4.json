@@ -13,5 +13,5 @@
     "upvotes": 85,
     "downvotes": 4,
     "comments": 21,
-    "imageUrl": "./src/assets/images/docker.png"
+    "imageUrl": "/images/docker.png"
 }

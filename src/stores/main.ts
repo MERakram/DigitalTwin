@@ -1,17 +1,17 @@
 // src/stores/main.ts
 import { defineStore } from "pinia";
 // Import the JSON files directly
-import article1 from "../assets/articles/article1.json";
-import article2 from "../assets/articles/article2.json";
-import article3 from "../assets/articles/article3.json";
-import article4 from "../assets/articles/article4.json";
-import article5 from "../assets/articles/article5.json";
-import article6 from "../assets/articles/article6.json";
-import article7 from "../assets/articles/article7.json";
-import article8 from "../assets/articles/article8.json";
-import article9 from "../assets/articles/article9.json";
-import article10 from "../assets/articles/article10.json";
-import article11 from "../assets/articles/article11.json";
+import article1 from "../../public/articles/article1.json";
+import article2 from "../../public/articles/article2.json";
+import article3 from "../../public/articles/article3.json";
+import article4 from "../../public/articles/article4.json";
+import article5 from "../../public/articles/article5.json";
+import article6 from "../../public/articles/article6.json";
+import article7 from "../../public/articles/article7.json";
+import article8 from "../../public/articles/article8.json";
+import article9 from "../../public/articles/article9.json";
+import article10 from "../../public/articles/article10.json";
+import article11 from "../../public/articles/article11.json";
 
 export const useMainStore = defineStore("main", {
   state: () => ({

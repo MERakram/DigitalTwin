@@ -13,5 +13,5 @@
     "upvotes": 22,
     "downvotes": 1,
     "comments": 12,
-    "imageUrl": "./src/assets/images/deploy-flask-tensorflow.png"
+    "imageUrl": "/images/deploy-flask-tensorflow.png"
 }

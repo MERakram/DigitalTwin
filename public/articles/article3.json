@@ -13,5 +13,5 @@
     "upvotes": 186,
     "downvotes": 9,
     "comments": 59,
-    "imageUrl": "./src/assets/images/distributed-training.png"
+    "imageUrl": "/images/distributed-training.png"
 }

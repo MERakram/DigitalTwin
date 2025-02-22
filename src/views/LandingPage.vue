@@ -97,12 +97,12 @@ const pricingPlans = [
 
 // Corrected image paths assuming assets are in public directory
 const partners = [
-  "./src/assets/coinbase.svg", // No need for "./src/assets" if they are in /public
-  "./src/assets/notion.svg",
-  "./src/assets/linear.svg",
-  "./src/assets/tinder.svg",
-  "./src/assets/gumroad.svg",
-  "./src/assets/tinder.svg",
+  "/icons/coinbase.svg",
+  "/icons/notion.svg",
+  "/icons/linear.svg",
+  "/icons/tinder.svg",
+  "/icons/gumroad.svg",
+  "/icons/tinder.svg",
 ];
 
 const carousel = ref<HTMLElement | null>(null);
