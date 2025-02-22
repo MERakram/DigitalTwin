@@ -5,7 +5,6 @@ import Logo from "../components/Logo.vue";
 import {
   ArrowUpCircle,
   ArrowDownCircle,
-  Heart,
   Bookmark,
   MessageCircle,
 } from "lucide-vue-next";

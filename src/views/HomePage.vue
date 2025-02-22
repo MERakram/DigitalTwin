@@ -4,14 +4,7 @@ import { useMainStore } from "../stores/main";
 import Logo from "../components/Logo.vue";
 import TrendingSidebar from "../components/TrendingSidebar.vue";
 import { ref, computed } from "vue";
-import {
-  ArrowUpCircle,
-  Heart,
-  Bookmark,
-  Search,
-  MessageCircle,
-  MoreHorizontal,
-} from "lucide-vue-next";
+import { ArrowUpCircle, Search, MessageCircle } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 
 const store = useMainStore();
@@ -56,10 +49,6 @@ const filteredArticles = computed(() => {
 
   return articles;
 });
-
-const toggleBookmark = (articleId: number) => {
-  store.toggleBookmark(articleId);
-};
 
 const goToArticleDetails = (articleId: number) => {
   router.push({ name: "article-details", params: { id: articleId } });
@@ -132,7 +121,7 @@ const getAvatarUrl = (author: string) => {
             <div
               v-for="article in filteredArticles"
               :key="article.id"
-              class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
+              class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer group"
               @click="goToArticleDetails(article.id)"
             >
               <div class="flex flex-col md:flex-row">
@@ -147,7 +136,11 @@ const getAvatarUrl = (author: string) => {
                     />
                     <span>{{ article.author }}</span>
                   </div>
-                  <h2 class="text-2xl font-bold mb-2">{{ article.title }}</h2>
+                  <h2
+                    class="text-2xl font-bold mb-2 group-hover:text-purple-600 transition-colors"
+                  >
+                    {{ article.title }}
+                  </h2>
                   <p class="text-gray-600 mb-4">{{ article.preview }}</p>
                   <div class="flex items-center text-xs text-gray-500 mb-2">
                     <span v-if="article.releaseDate" class="flex items-center">

@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/router/index.ts","./src/stores/main.ts","./src/App.vue","./src/components/HelloWorld.vue","./src/components/Logo.vue","./src/components/TrendingSidebar.vue","./src/views/ArticleDetailsPage.vue","./src/views/HomePage.vue","./src/views/LandingPage.vue","./src/views/UploadPage.vue"],"version":"5.7.3"}
