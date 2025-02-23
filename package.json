@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^10.7.2",
     "autoprefixer": "^10.4.17",
     "lucide-vue-next": "^0.475.0",

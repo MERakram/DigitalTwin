@@ -1,12 +1,18 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Logo from "../components/Logo.vue";
+import { useMainStore } from "../stores/main";
+import { useRouter } from "vue-router";
 
 const title = ref("");
+const author = ref(""); // Add author field
 const category = ref("");
 const price = ref("");
-const description = ref("");
+const preview = ref(""); // Changed from description
 const content = ref("");
+const imageUrl = ref(""); //added for the image link
+const isOnSale = ref(false); //added for sale
+const originalPrice = ref<number | null>(null);
 
 const categories = [
   "Natural Language Processing",
@@ -15,118 +21,231 @@ const categories = [
   "Data Analytics",
   "Robotics",
   "Cloud AI",
+  "Graph Neural Networks", // Added from the article examples
+  "Recommender Systems", // Added from the article examples
 ];
 
+const store = useMainStore();
+const router = useRouter();
+
+const nextId = computed(() => {
+  // Find the maximum existing ID and add 1
+  if (store.articles.length === 0) return 1;
+  const maxId = store.articles.reduce(
+    (max, article) => Math.max(max, article.id),
+    0
+  );
+  return maxId + 1;
+});
+
 const handleSubmit = () => {
-  // Handle form submission
-  console.log({
+  if (
+    !title.value ||
+    !author.value ||
+    !category.value ||
+    !price.value ||
+    !preview.value ||
+    !content.value ||
+    !imageUrl.value
+  ) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+  // Validate price (must be a number)
+  const priceNum = parseFloat(price.value);
+  if (isNaN(priceNum)) {
+    alert("Price must be a valid number.");
+    return;
+  }
+  const originalPriceNum = originalPrice.value
+    ? parseFloat(originalPrice.value.toString())
+    : null;
+  if (
+    isOnSale.value &&
+    (originalPriceNum === null || isNaN(originalPriceNum))
+  ) {
+    alert("Original price must be a valid number when on sale.");
+    return;
+  }
+  if (isOnSale.value && originalPriceNum! <= priceNum) {
+    alert("Original price should be higher than the sale price");
+    return;
+  }
+
+  const newArticle = {
+    id: nextId.value, // Generate a unique ID
     title: title.value,
+    author: author.value,
+    authorAvatar: "/default-avatar.png", // You can add a default or let users upload
+    releaseDate: new Date().toISOString().split("T")[0], // Today's date
     category: category.value,
-    price: price.value,
-    description: description.value,
+    preview: preview.value,
     content: content.value,
-  });
+    price: priceNum,
+    originalPrice: originalPriceNum,
+    isOnSale: isOnSale.value,
+    upvotes: 0, // Start with 0
+    downvotes: 0,
+    comments: 0,
+    imageUrl: imageUrl.value,
+  };
+
+  store.articles.push(newArticle); // Add to the store
+  router.push("/home"); // Redirect to homepage
+};
+const handleOriginalPriceChange = () => {
+  if (!isOnSale.value) {
+    originalPrice.value = null; // Reset if not on sale
+  }
 };
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50">
-    <nav class="px-6 py-4 bg-white border-b">
+    <nav class="py-4 bg-white border-b">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <Logo />
-        <div class="flex gap-4">
-          <button class="btn-secondary">Sign In</button>
-          <button class="btn-primary">Get Started</button>
-        </div>
+        <router-link :to="{ name: 'home' }">
+          <Logo />
+        </router-link>
       </div>
     </nav>
 
-    <main class="max-w-3xl mx-auto px-6 py-12">
+    <main class="max-w-4xl mx-auto px-6 py-12">
       <div class="bg-white rounded-xl shadow-sm p-8">
-        <h1 class="text-2xl font-bold mb-8">Share Your AI Solution</h1>
+        <h1
+          class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+        >
+          Share Your AI Solution
+        </h1>
 
-        <form @submit.prevent="handleSubmit" class="space-y-6">
-          <div>
+        <form @submit.prevent="handleSubmit" class="space-y-6 pt-10">
+          <div class="relative z-0 mb-6 w-full group">
+            <input
+              v-model="title"
+              type="text"
+              class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              placeholder=" "
+              required
+            />
             <label
-              for="title"
-              class="block text-sm font-medium text-gray-700 mb-1"
+              class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >Title</label
             >
-            <input
-              type="text"
-              id="title"
-              v-model="title"
-              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-              placeholder="Enter the title of your solution"
-            />
           </div>
-
-          <div>
+          <div class="relative z-0 mb-6 w-full group">
+            <input
+              v-model="author"
+              type="text"
+              class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              placeholder=" "
+              required
+            />
             <label
-              for="category"
-              class="block text-sm font-medium text-gray-700 mb-1"
-              >Category</label
+              class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Author</label
             >
+          </div>
+          <div class="relative z-0 mb-6 w-full group">
             <select
-              id="category"
               v-model="category"
-              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+              class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              required
             >
-              <option value="">Select a category</option>
+              <option value="" disabled>Select a category</option>
               <option v-for="cat in categories" :key="cat" :value="cat">
                 {{ cat }}
               </option>
             </select>
+            <label
+              class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Category</label
+            >
           </div>
 
-          <div>
-            <label
-              for="price"
-              class="block text-sm font-medium text-gray-700 mb-1"
-              >Price (USD)</label
-            >
+          <div class="grid grid-cols-2 gap-6">
+            <div class="relative z-0 mb-6 w-full group">
+              <input
+                v-model="price"
+                type="number"
+                class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >Price (USD)</label
+              >
+            </div>
+            <!--Is on Sale-->
+            <div class="relative z-0 mb-6 w-full group flex items-center">
+              <input
+                id="isOnSale"
+                v-model="isOnSale"
+                type="checkbox"
+                @change="handleOriginalPriceChange"
+                class="mr-2 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500"
+              />
+              <label for="isOnSale" class="text-lg text-gray-500"
+                >Is on Sale?</label
+              >
+            </div>
+          </div>
+          <!-- Original Price (Conditional) -->
+          <div v-if="isOnSale" class="relative z-0 mb-6 w-full group">
             <input
+              v-model="originalPrice"
               type="number"
-              id="price"
-              v-model="price"
-              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-              placeholder="Enter the price"
+              class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              placeholder=" "
+              :required="isOnSale"
+            />
+            <label
+              class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Original Price (USD)</label
+            >
+          </div>
+
+          <div class="relative z-0 mb-6 w-full group">
+            <input
+              v-model="imageUrl"
+              type="text"
+              class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Image URL</label
+            >
+          </div>
+
+          <div class="relative z-0 mb-6 w-full group">
+            <textarea
+              v-model="preview"
+              class="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              placeholder=" "
+              required
+              rows="3"
+            />
+            <label
+              class="peer-focus:font-semibold absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+              >Short Description (Preview)</label
+            >
+          </div>
+
+          <div class="relative mb-6 w-full group">
+            <h2 class="text-gray-500 font-semibold text-lg mb-2">Content</h2>
+            <QuillEditor
+              v-model:content="content"
+              contentType="html"
+              theme="snow"
+              placeholder="Write your article content here..."
+              toolbar="full"
             />
           </div>
 
-          <div>
-            <label
-              for="description"
-              class="block text-sm font-medium text-gray-700 mb-1"
-              >Short Description</label
-            >
-            <textarea
-              id="description"
-              v-model="description"
-              rows="3"
-              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-              placeholder="Write a brief description of your solution"
-            ></textarea>
-          </div>
-
-          <div>
-            <label
-              for="content"
-              class="block text-sm font-medium text-gray-700 mb-1"
-              >Content</label
-            >
-            <textarea
-              id="content"
-              v-model="content"
-              rows="10"
-              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-              placeholder="Write your article content here..."
-            ></textarea>
-          </div>
-
-          <div class="flex items-center justify-between pt-4">
-            <button type="button" class="btn-secondary">Save as Draft</button>
-            <button type="submit" class="btn-primary">Publish Article</button>
+          <div class="flex items-center justify-end pt-4">
+            <button type="submit" class="btn-primary">Submit for Review</button>
           </div>
         </form>
       </div>
