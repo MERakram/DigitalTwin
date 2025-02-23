@@ -102,8 +102,8 @@ const handleOriginalPriceChange = () => {
 
 <template>
   <div class="min-h-screen bg-gray-50">
-    <nav class="py-4 bg-white border-b">
-      <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <nav class="py-4">
+      <div class="max-w-[90rem] mx-auto flex justify-between items-center">
         <router-link :to="{ name: 'home' }">
           <Logo />
         </router-link>

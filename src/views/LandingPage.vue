@@ -59,38 +59,41 @@ const whyChooseFeatures = [
 
 const pricingPlans = [
   {
-    title: "Basic",
-    price: "$49",
+    title: "Starter",
+    price: "$999",
     features: [
-      "Access to 5 AI solutions",
-      "Email support",
-      "Basic reporting",
-      "Community access",
-      "Standard onboarding",
+      "Implementation on your data by a dedicated team",
+      "1 AI solution deployment",
+      "Basic email support",
+      "1 month onboarding support",
+      "Team size: 2-3 specialists",
+      "Access to knowledge base",
     ],
   },
   {
-    title: "Pro",
-    price: "$99",
+    title: "Growth",
+    price: "$2,499",
     features: [
-      "Access to 20 AI solutions",
-      "Priority email support",
-      "Advanced reporting",
-      "Community access",
-      "Premium onboarding",
-      "Monthly strategy call",
+      "Implementation on your data by a dedicated team",
+      "Up to 3 AI solution deployments",
+      "Priority email & chat support",
+      "3 months onboarding support",
+      "Monthly consulting call",
+      "Team size: 4-6 specialists",
+      "Basic analytics dashboard",
     ],
   },
   {
     title: "Enterprise",
     price: "Contact Us",
     features: [
-      "Unlimited AI solutions",
-      "Dedicated account manager",
-      "Custom reporting & analytics",
-      "24/7 support",
-      "Personalized onboarding",
-      "Quarterly business reviews",
+      "Custom implementation on your data",
+      "Unlimited AI solution deployments",
+      "24/7 dedicated support",
+      "Ongoing consulting & strategy",
+      "Custom analytics & reporting",
+      "Team size: Custom, based on project scope",
+      "Quarterly performance reviews",
     ],
   },
 ];
@@ -151,7 +154,7 @@ const handleGetStarted = () => {
     <!-- Navbar (Transparent) -->
     <nav class="px-4 py-4">
       <div
-        class="max-w-7xl text-white mx-auto flex justify-between items-center"
+        class="max-w-[90rem] text-white mx-auto flex justify-between items-center"
       >
         <Logo />
         <div class="flex gap-4">
@@ -178,8 +181,8 @@ const handleGetStarted = () => {
                 Democratizing AI for Small Businesses
               </h1>
               <p class="text-xl text-gray-200 mb-8">
-                Digital Twin helps small companies harness the power of AI
-                without the need for in-house expertise.
+                Digital Twin helps small companies harness the power of AI with
+                custom implementation and expert support.
               </p>
               <div class="flex gap-4">
                 <button
@@ -242,8 +245,8 @@ const handleGetStarted = () => {
             Why Choose Digital Twin?
           </h2>
           <p class="text-lg text-gray-200">
-            We make AI implementation simple, affordable, and effective for
-            small businesses.
+            We implement AI on your data with ongoing support and consulting,
+            tailored to your business needs.
           </p>
           <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div
@@ -270,9 +273,10 @@ const handleGetStarted = () => {
         style="min-height: calc(100vh - 4rem)"
       >
         <div class="max-w-7xl mx-auto text-center">
-          <h2 class="text-3xl font-bold mb-4">Pricing Plans</h2>
-          <p class="text-lg text-gray-600">
-            Choose the plan that's right for your business.
+          <h2 class="text-3xl font-bold mb-4">Subscription Plans</h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Get AI implemented on your data by our expert team with ongoing
+            support and consulting. Scientific papers sold separately.
           </p>
 
           <div class="mt-12 grid gap-8 md:grid-cols-3">
@@ -315,7 +319,7 @@ const handleGetStarted = () => {
                 class="mt-6 w-full px-4 py-3 rounded-lg text-white bg-purple-600 hover:bg-purple-700"
               >
                 {{
-                  plan.title === "Enterprise" ? "Get a Quote" : "Get Started"
+                  plan.title === "Enterprise" ? "Get a Quote" : "Subscribe Now"
                 }}
               </button>
             </div>

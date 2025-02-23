@@ -8,6 +8,8 @@ import {
   Bookmark,
   MessageCircle,
 } from "lucide-vue-next";
+import katex from "katex"; // Import KaTeX for LaTeX rendering
+import "katex/dist/katex.min.css"; // Import KaTeX CSS
 
 const props = defineProps<{ id: string }>();
 const store = useMainStore();
@@ -21,18 +23,34 @@ const getAvatarUrl = (author: string) => {
   const seed = author.replace(/\s+/g, "");
   return `https://api.dicebear.com/7.x/micah/svg?seed=${seed}&size=64`;
 };
+
+// Function to render LaTeX within the HTML content
+const renderMath = (content: string) => {
+  return content.replace(
+    /<code class="language-latex">(.*?)<\/code>/g,
+    (_, latex) => {
+      return katex.renderToString(latex, { throwOnError: false });
+    }
+  );
+};
+
+const safeContent = computed(() =>
+  article.value ? renderMath(article.value.content) : ""
+);
 </script>
 
 <template>
-  <div v-if="article" class="p-8">
+  <div v-if="article">
     <nav class="px-6 py-4 bg-white border-b">
-      <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <Logo />
+      <div class="max-w-[90rem] mx-auto flex justify-between items-center">
+        <router-link :to="{ name: 'home' }">
+          <Logo />
+        </router-link>
       </div>
     </nav>
     <!-- Main Content Area -->
-    <div class="max-w-4xl mx-auto">
-      <div class="flex items-center text-sm text-gray-500 my-4">
+    <div class="max-w-4xl mx-auto px-6 py-8">
+      <div class="flex items-center text-sm text-gray-500 mb-6">
         <img
           :src="getAvatarUrl(article.author)"
           :alt="article.author"
@@ -63,13 +81,14 @@ const getAvatarUrl = (author: string) => {
       <img
         :src="article.imageUrl"
         :alt="article.title"
-        class="w-full object-cover mb-6 rounded-lg"
+        class="w-full object-cover mb-8 rounded-lg"
       />
-      <!-- Display full article content. Use v-html for rich text! -->
-      <div class="prose prose-lg" v-html="article.content"></div>
 
-      <!-- Upvote/Downvote/Like/Comment Section (Similar to HomePage) -->
-      <div class="flex items-center justify-start mt-4 space-x-4">
+      <!-- Article Content with KaTeX rendering -->
+      <div class="prose prose-lg" v-html="safeContent"></div>
+
+      <!-- Upvote/Downvote/Comment Section -->
+      <div class="flex items-center justify-start mt-8 space-x-6">
         <button
           @click="store.upvoteArticle(article.id)"
           class="flex items-center text-gray-600 hover:text-purple-600"
@@ -84,7 +103,6 @@ const getAvatarUrl = (author: string) => {
           <ArrowDownCircle class="h-6 w-6 mr-1" />
           <span>{{ article.downvotes || 0 }}</span>
         </button>
-
         <button class="flex items-center text-gray-600 hover:text-purple-600">
           <MessageCircle class="h-6 w-6 mr-1" />
           <span>{{ article.comments || 0 }}</span>
@@ -98,15 +116,17 @@ const getAvatarUrl = (author: string) => {
         </button>
       </div>
 
-      <!-- TODO: Add a comments section here -->
-
-      <!-- References (Example - adapt to your article data) -->
-      <div class="mt-12">
+      <!-- References Section -->
+      <div v-if="article.citations?.length" class="mt-12">
         <h2 class="text-2xl font-bold mb-4">References</h2>
-        <ul class="list-disc pl-5">
-          <li>Reference 1</li>
-          <li>Reference 2</li>
-          {/*Dynamically add using v-for*/}
+        <ul class="list-decimal pl-6 text-gray-700">
+          <li
+            v-for="(citation, index) in article.citations"
+            :key="index"
+            class="mb-2"
+          >
+            <span v-html="citation"></span>
+          </li>
         </ul>
       </div>
     </div>
@@ -117,30 +137,45 @@ const getAvatarUrl = (author: string) => {
 </template>
 
 <style scoped>
-/* Add custom styles for rich text content (optional) */
 .prose {
-  /* Example styles - customize as needed */
-  line-height: 1.6;
+  line-height: 1.75;
   color: #333;
 }
 
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-  margin-top: 1.5em;
-  margin-bottom: 0.75em;
-  font-weight: bold;
+.prose h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .prose p {
-  margin-bottom: 1em;
+  margin-bottom: 1.25rem;
 }
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
 .prose pre {
   background-color: #f4f4f4;
-  padding: 0.8em;
-  border-radius: 0.4em;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: "Courier New", Courier, monospace;
+  overflow-x: auto;
+}
+
+.prose code {
+  font-size: 0.9rem;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
 }
 </style>
