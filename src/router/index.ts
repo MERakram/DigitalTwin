@@ -1,9 +1,11 @@
-// src/router/index.ts
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "../views/LandingPage.vue";
 import HomePage from "../views/HomePage.vue";
 import UploadPage from "../views/UploadPage.vue";
 import ArticleDetailsPage from "../views/ArticleDetailsPage.vue";
+import UserTypePage from "../views/UserTypePage.vue";
+import DatasetUploadPage from "../views/DatasetUploadPage.vue";
+import ResearcherDashboardPage from "../views/ResearcherDashboardPage.vue"; // NEW
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,18 +28,28 @@ const router = createRouter({
     {
       path: "/articles",
       name: "articles",
-      component: () => import("../views/HomePage.vue"), // Keep this
+      component: HomePage,
     },
     {
-      path: "/article/:id", // Dynamic segment for article ID
+      path: "/article/:id",
       name: "article-details",
-      component: ArticleDetailsPage, // Use the component
-      props: true, // Pass the route params as props to the component
+      component: ArticleDetailsPage,
+      props: true,
     },
     {
-      path: "/auth",
-      name: "auth",
-      component: () => import("../views/HomePage.vue"),
+      path: "/user-type",
+      name: "user-type",
+      component: UserTypePage,
+    },
+    {
+      path: "/dataset-upload",
+      name: "dataset-upload",
+      component: DatasetUploadPage,
+    },
+    {
+      path: "/researcher-dashboard", // NEW
+      name: "researcher-dashboard",
+      component: ResearcherDashboardPage,
     },
   ],
 });

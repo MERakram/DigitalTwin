@@ -12,6 +12,8 @@ import {
 } from "lucide-vue-next";
 import { ref, onMounted, onUnmounted } from "vue";
 
+import PricingPlan from "../components/PricingPlan.vue";
+
 const router = useRouter();
 
 const features = [
@@ -54,47 +56,6 @@ const whyChooseFeatures = [
     description:
       "Maximize your ROI with our competitively priced AI solutions.",
     icon: DollarSign,
-  },
-];
-
-const pricingPlans = [
-  {
-    title: "Starter",
-    price: "$999",
-    features: [
-      "Implementation on your data by a dedicated team",
-      "1 AI solution deployment",
-      "Basic email support",
-      "1 month onboarding support",
-      "Team size: 2-3 specialists",
-      "Access to knowledge base",
-    ],
-  },
-  {
-    title: "Growth",
-    price: "$2,499",
-    features: [
-      "Implementation on your data by a dedicated team",
-      "Up to 3 AI solution deployments",
-      "Priority email & chat support",
-      "3 months onboarding support",
-      "Monthly consulting call",
-      "Team size: 4-6 specialists",
-      "Basic analytics dashboard",
-    ],
-  },
-  {
-    title: "Enterprise",
-    price: "Contact Us",
-    features: [
-      "Custom implementation on your data",
-      "Unlimited AI solution deployments",
-      "24/7 dedicated support",
-      "Ongoing consulting & strategy",
-      "Custom analytics & reporting",
-      "Team size: Custom, based on project scope",
-      "Quarterly performance reviews",
-    ],
   },
 ];
 
@@ -143,7 +104,11 @@ const startCarousel = () => {
 };
 
 const handleGetStarted = () => {
-  router.push("/home");
+  router.push("/user-type");
+};
+
+const handleLogin = () => {
+  router.push("/user-type");
 };
 </script>
 
@@ -159,6 +124,7 @@ const handleGetStarted = () => {
         <Logo />
         <div class="flex gap-4">
           <button
+            @click="handleLogin"
             class="px-6 py-3 rounded-lg text-white font-medium transition-all duration-200 border-2 border-white hover:bg-white/10"
           >
             Login
@@ -268,64 +234,7 @@ const handleGetStarted = () => {
       </section>
 
       <!-- Pricing Section -->
-      <section
-        class="py-20 px-6 bg-white flex items-center"
-        style="min-height: calc(100vh - 4rem)"
-      >
-        <div class="max-w-7xl mx-auto text-center">
-          <h2 class="text-3xl font-bold mb-4">Subscription Plans</h2>
-          <p class="text-lg text-gray-600 mb-8">
-            Get AI implemented on your data by our expert team with ongoing
-            support and consulting. Scientific papers sold separately.
-          </p>
-
-          <div class="mt-12 grid gap-8 md:grid-cols-3">
-            <div
-              v-for="plan in pricingPlans"
-              :key="plan.title"
-              class="p-8 rounded-lg border shadow-lg flex flex-col"
-            >
-              <h3 class="text-3xl font-semibold mb-2">{{ plan.title }}</h3>
-              <p class="text-5xl font-bold mb-4">
-                {{ plan.price
-                }}<span class="text-base font-normal">
-                  {{ plan.title === "Enterprise" ? "" : "/ month" }}</span
-                >
-              </p>
-              <ul class="space-y-3 flex-grow">
-                <li
-                  v-for="feature in plan.features"
-                  :key="feature"
-                  class="flex items-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5 mr-2 text-green-500"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m4.5 12.75 6 6 9-13.5"
-                    />
-                  </svg>
-                  {{ feature }}
-                </li>
-              </ul>
-              <button
-                class="mt-6 w-full px-4 py-3 rounded-lg text-white bg-purple-600 hover:bg-purple-700"
-              >
-                {{
-                  plan.title === "Enterprise" ? "Get a Quote" : "Subscribe Now"
-                }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PricingPlan></PricingPlan>
 
       <!-- Partners Section (Carousel) -->
       <section class="py-10 px-6 bg-gray-100">

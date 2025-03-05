@@ -182,14 +182,14 @@ const getAvatarUrl = (author: string) => {
                     class="text-sm"
                   >
                     <span class="text-gray-500 line-through mr-2"
-                      >${{ article.originalPrice }}</span
+                      >${{ article.originalPrice.toLocaleString() }}</span
                     >
-                    <span class="text-red-500 font-bold"
-                      >${{ article.price }}</span
+                    <span class="text-red-500 font-semibold text-xl"
+                      >${{ article.price.toLocaleString() }}</span
                     >
                   </div>
-                  <div v-else class="text-lg font-bold text-purple-900">
-                    ${{ article.price }}
+                  <div v-else class="text-2xl font-bold text-purple-900">
+                    ${{ article.price.toLocaleString() }}
                   </div>
                 </div>
 

@@ -7,12 +7,15 @@ import {
   ArrowDownCircle,
   Bookmark,
   MessageCircle,
+  ShoppingCart, // NEW: Import ShoppingCart icon
 } from "lucide-vue-next";
 import katex from "katex"; // Import KaTeX for LaTeX rendering
 import "katex/dist/katex.min.css"; // Import KaTeX CSS
+import { useRouter } from "vue-router"; // Import useRouter
 
 const props = defineProps<{ id: string }>();
 const store = useMainStore();
+const router = useRouter(); // Initialize useRouter
 
 const article = computed(() => {
   const articleId = parseInt(props.id, 10);
@@ -37,6 +40,11 @@ const renderMath = (content: string) => {
 const safeContent = computed(() =>
   article.value ? renderMath(article.value.content) : ""
 );
+
+const handleBuyClick = () => {
+  // Redirect to the dataset upload page
+  router.push({ name: "dataset-upload" });
+};
 </script>
 
 <template>
@@ -46,6 +54,14 @@ const safeContent = computed(() =>
         <router-link :to="{ name: 'home' }">
           <Logo />
         </router-link>
+        <!-- Buy Button -->
+        <button
+          @click="handleBuyClick"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition-colors font-medium"
+        >
+          <ShoppingCart class="w-5 h-5" />
+          Buy
+        </button>
       </div>
     </nav>
     <!-- Main Content Area -->
