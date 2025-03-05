@@ -3,7 +3,7 @@ import { useMainStore } from "../stores/main";
 import Logo from "../components/Logo.vue";
 import TrendingSidebar from "../components/TrendingSidebar.vue";
 import { ref, computed } from "vue";
-import { ArrowUpCircle, Search, MessageCircle, Pencil } from "lucide-vue-next"; // Added Pencil icon
+import { ArrowUpCircle, Search, MessageCircle } from "lucide-vue-next"; // Added Pencil icon
 import { useRouter } from "vue-router";
 
 const store = useMainStore();
@@ -64,15 +64,6 @@ const getAvatarUrl = (author: string) => {
     <nav class="py-4 bg-white">
       <div class="mx-auto max-w-[90rem] flex justify-between items-center">
         <Logo />
-        <div class="flex gap-4">
-          <router-link
-            to="/upload"
-            class="flex items-center gap-2 px-4 py-2 rounded-lg text-purple-900 bg-purple-100 hover:bg-purple-200 transition-colors font-medium"
-          >
-            <Pencil class="w-5 h-5" />
-            Write
-          </router-link>
-        </div>
       </div>
     </nav>
 
