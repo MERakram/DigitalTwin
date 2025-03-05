@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, computed } from "vue";
+import { defineProps, computed, ref } from "vue";
 import { useMainStore } from "../stores/main";
 import Logo from "../components/Logo.vue";
 import {
@@ -7,7 +7,8 @@ import {
   ArrowDownCircle,
   Bookmark,
   MessageCircle,
-  ShoppingCart, // NEW: Import ShoppingCart icon
+  ShoppingCart, // Import ShoppingCart icon
+  Play, // Import Play icon for training
 } from "lucide-vue-next";
 import katex from "katex"; // Import KaTeX for LaTeX rendering
 import "katex/dist/katex.min.css"; // Import KaTeX CSS
@@ -16,6 +17,7 @@ import { useRouter } from "vue-router"; // Import useRouter
 const props = defineProps<{ id: string }>();
 const store = useMainStore();
 const router = useRouter(); // Initialize useRouter
+const purchased = ref(false); // Track purchase state
 
 const article = computed(() => {
   const articleId = parseInt(props.id, 10);
@@ -42,8 +44,19 @@ const safeContent = computed(() =>
 );
 
 const handleBuyClick = () => {
-  // Redirect to the dataset upload page
-  router.push({ name: "dataset-upload" });
+  // Toggle the purchased state to true
+  purchased.value = true;
+  // In a real application, you might want to persist this state in a store or database
+};
+
+const handleStartTraining = () => {
+  // Navigate to the training console with this model
+  if (article.value) {
+    router.push({
+      name: "training-console",
+      params: { modelId: article.value.id },
+    });
+  }
 };
 </script>
 
@@ -56,11 +69,20 @@ const handleBuyClick = () => {
         </router-link>
         <!-- Buy Button -->
         <button
+          v-if="!purchased"
           @click="handleBuyClick"
           class="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition-colors font-medium"
         >
           <ShoppingCart class="w-5 h-5" />
           Buy
+        </button>
+        <button
+          v-else
+          @click="handleStartTraining"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-colors font-medium"
+        >
+          <Play class="w-5 h-5" />
+          Start Training
         </button>
       </div>
     </nav>

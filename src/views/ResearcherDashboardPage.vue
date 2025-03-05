@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import Logo from "../components/Logo.vue";
 import {
-  Pencil,
   PlusCircle,
   Eye as EyeIcon,
   ExternalLink as ExternalLinkIcon,
