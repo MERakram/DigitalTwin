@@ -10,20 +10,20 @@
         and consulting. Scientific papers sold separately.
       </p>
 
-      <div class="mt-12 grid gap-6 md:grid-cols-4">
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
         <div
           v-for="plan in pricingPlans"
           :key="plan.title"
           class="p-8 rounded-lg border shadow-lg flex flex-col transition-transform duration-300 hover:transform hover:-translate-y-2"
         >
-          <!-- <div v-if="plan.popular" class="ribbon">Popular</div> -->
           <h3 class="text-3xl font-semibold mb-2">{{ plan.title }}</h3>
           <p class="text-5xl font-bold mb-4">
             {{ plan.price
             }}<span class="text-base font-normal">
-              {{ plan.title === "Enterprise" ? "" : "/ month" }}</span
+              {{ plan.title === "Entreprise" ? "" : "/ month" }}</span
             >
           </p>
+          <p class="text-gray-600 mb-4">{{ plan.description }}</p>
           <ul class="space-y-3 flex-grow">
             <li
               v-for="feature in plan.features"
@@ -50,13 +50,7 @@
           <button
             class="mt-6 w-full px-4 py-3 rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-300"
           >
-            {{
-              plan.title === "Enterprise"
-                ? "Get a Quote"
-                : plan.title === "Freemium"
-                ? "Get Started"
-                : "Subscribe Now"
-            }}
+            {{ plan.buttonText }}
           </button>
         </div>
       </div>
@@ -69,51 +63,43 @@ const pricingPlans = [
   {
     title: "Freemium",
     price: "€0",
-    popular: false,
+    description: "Explore AI potential with your first models, no commitments.",
+    buttonText: "Get Started Free",
     features: [
-      "Access to basic ready-to-use AI models",
+      "1 AI model with limited quotas (100MB text/1GB images)",
       "Deploy on your own resources (AWS, Azure)",
-      "Limited access to deployment platform (100MB text or 1GB images)",
+      "Access to 5000+ user community",
       "No discount on acquisition rights",
     ],
   },
   {
-    title: "Tier 1",
+    title: "Premium",
     price: "€99",
-    popular: false,
+    description:
+      "Expanded resources with priority support for scaled deployment.",
+    buttonText: "Subscribe Now",
     features: [
-      "All Freemium features",
-      "5% discount on acquisition rights",
-      "Higher deployment quota",
-      "Basic email support",
-      "1-month onboarding",
-      "2-3 user accounts",
-      "Access to knowledge base",
+      "Multiple deployable AI models with higher quotas",
+      "5-15% discount on acquisition rights",
+      "Priority email/chat support",
+      "Personalized onboarding & training",
+      "Early access to latest updates",
+      "Multi-user team accounts",
     ],
   },
   {
-    title: "Tier 2",
-    price: "€299",
-    popular: true,
-    features: [
-      "All Tier 1 features",
-      "15% discount on acquisition rights",
-      "Run up to 3 parallel AI models",
-      "Priority access to top-performing models",
-      "Advanced support",
-    ],
-  },
-  {
-    title: "Enterprise",
+    title: "Entreprise",
     price: "Custom",
-    popular: false,
+    description:
+      "Industrialize your AI strategy with dedicated infrastructure.",
+    buttonText: "Get a Quote",
     features: [
-      "Very high or unlimited quotas",
-      "Custom SLA and dedicated support",
-      "Custom integration (on-premise, hybrid)",
-      "Exclusive access to premium models",
-      "R&D partnerships",
-      "Negotiated pricing based on project needs",
+      "Unlimited model deployment & data quotas",
+      "Custom integration (on-premise, hybrid cloud)",
+      "24/7 dedicated support with enhanced SLA",
+      "Exclusive access to premium AI models",
+      "Team management tools & permissions",
+      "Custom pricing based on project needs",
     ],
   },
 ];
